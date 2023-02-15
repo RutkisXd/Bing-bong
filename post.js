@@ -19,7 +19,7 @@ async function viewPost() {
     authorLink.classList.add('author-link')
 
 
-    authorLink.href = `./author.html?id=${post.userId}`
+    authorLink.href = `./user.html?id=${post.userId}`
     authorLink.textContent = post.user.name
     postAuthor.append('Author: ', authorLink)
 

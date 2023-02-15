@@ -9,7 +9,7 @@ async function getAlbum() {
 
   const authorLink = document.createElement('a');
   authorLink.textContent = `Author: ${album.user.name}`;
-  authorLink.href = `./author.html?id=${album.user.id}`;
+  authorLink.href = `./user.html?id=${album.user.id}`;
 
   const photosWrapper = document.createElement('div');
   photosWrapper.classList.add('my-gallery');
