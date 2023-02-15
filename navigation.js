@@ -19,6 +19,7 @@ let navigationArr = [
 
 function navigation() {
     let navigationList = document.createElement('div')
+    navigationList.classList.add('navigation-wrapper')
     const pageWrapper = document.querySelector('#page-content')
 
     navigationArr.map(arr => {

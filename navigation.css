@@ -1,0 +1,15 @@
+.navigation-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(191, 196, 196);
+    padding: 20px 10px;
+    margin-bottom: 20px;
+}
+
+.navigation-item {
+    text-decoration: none;
+    color: black;
+}
