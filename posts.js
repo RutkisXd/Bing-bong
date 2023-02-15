@@ -16,9 +16,9 @@ async function getPosts() {
     const postItem = document.createElement('li')
     postItem.classList.add('post-item')
     postItem.innerHTML = `
-      <a href="./user.html?id=${post.userId}">${userName}</a>
+      <a href="./user.html?user-id=${post.userId}">${userName}</a>
       <span class="post-comments-count">${comments.length} comments</span>
-      <a href="./post.html?id=${post.id}">${post.title}</a>
+      <a href="./post.html?post-id=${post.id}">${post.title}</a>
     `
 
     postList.append(postItem)

@@ -20,7 +20,7 @@ async function getAlbums() {
     albumItem.classList.add('album-item')
 
     const albumItemLink = document.createElement('a')
-    albumItemLink.href = `./album.html?id=${album.id}`
+    albumItemLink.href = `./album.html?album-id=${album.id}`
 
     const photoElement = document.createElement('img')
     photoElement.src = randomPhotoUrl;

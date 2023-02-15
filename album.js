@@ -1,29 +1,33 @@
 const pageWrapper = document.querySelector('#page-content');
 
 async function getAlbum() {
-  const albumRes = await fetch(`https://jsonplaceholder.typicode.com/albums/5?_expand=user&_expand=userId&_embed=photos`);
-  const album = await albumRes.json();
+    const querryParams = location.search
+    const urlParams = new URLSearchParams(querryParams)
+    const albumId = urlParams.get('album-id')
 
-  const albumTitle = document.createElement('h4');
-  albumTitle.textContent = album.title;
+    const albumRes = await fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}?_expand=user&_expand=userId&_embed=photos`);
+    const album = await albumRes.json();
 
-  const authorLink = document.createElement('a');
-  authorLink.textContent = `Author: ${album.user.name}`;
-  authorLink.href = `./user.html?id=${album.user.id}`;
+    const albumTitle = document.createElement('h4');
+    albumTitle.textContent = album.title;
 
-  const photosWrapper = document.createElement('div');
-  photosWrapper.classList.add('my-gallery');
+    const authorLink = document.createElement('a');
+    authorLink.textContent = `Author: ${album.user.name}`;
+    authorLink.href = `./user.html?user-id=${album.user.id}`;
 
-  album.photos.forEach(photo => {
-    const photoLink = document.createElement('a');
-    photoLink.href = photo.url;
-    photoLink.title = photo.title;
+    const photosWrapper = document.createElement('div');
+    photosWrapper.classList.add('my-gallery');
 
-    const photoImg = document.createElement('img');
-    photoImg.src = photo.thumbnailUrl;
+    album.photos.forEach(photo => {
+        const photoLink = document.createElement('a');
+        photoLink.href = photo.url;
+        photoLink.title = photo.title;
 
-    photoLink.appendChild(photoImg);
-    photosWrapper.appendChild(photoLink);
+        const photoImg = document.createElement('img');
+        photoImg.src = photo.thumbnailUrl;
+
+        photoLink.appendChild(photoImg);
+        photosWrapper.appendChild(photoLink);
   });
 
   pageWrapper.append(albumTitle, authorLink, photosWrapper);

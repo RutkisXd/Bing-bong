@@ -17,7 +17,7 @@ async function getUsersAndPosts() {
 
     const userLink = document.createElement('a')
     userLink.textContent = `${user.name} (${postCount})`
-    userLink.href = `./user.html?id=${user.id}`;
+    userLink.href = `./user.html?user-id=${user.id}`;
     userItem.append(userLink)
 
     userList.append(userItem)

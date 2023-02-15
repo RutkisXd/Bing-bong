@@ -1,65 +1,72 @@
 const pageWrapper = document.querySelector('#page-content')
 
 async function userProfile() {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/users/5`)
-    const profile = await res.json()
+  const querryParams = location.search
+  const urlParams = new URLSearchParams(querryParams)
+  const userId = urlParams.get('user-id')
 
-    const profileWrapper = document.createElement('div')
-    profileWrapper.classList.add('profile-wrapper')
+  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+  const profile = await res.json()
+
+  const profileWrapper = document.createElement('div')
+  profileWrapper.classList.add('profile-wrapper')
 
 
-    const profileFullName = document.createElement('div')
-    profileFullName.textContent = profile.name
+  const profileFullName = document.createElement('div')
+  profileFullName.textContent = profile.name
 
-    const profileUsername = document.createElement('div')
-    profileUsername.textContent = profile.username
+  const profileUsername = document.createElement('div')
+  profileUsername.textContent = profile.username
 
-    const profileEmail = document.createElement('div')
-    profileEmail.textContent = profile.email
+  const profileEmail = document.createElement('div')
+  profileEmail.textContent = profile.email
 
-    const addressWrapper = document.createElement('div')
-    addressWrapper.classList.add('address-wrapper')
+  const addressWrapper = document.createElement('div')
+  addressWrapper.classList.add('address-wrapper')
 
-    const addressStreet = document.createElement('div')
-    addressStreet.textContent = profile.address.street
+  const addressStreet = document.createElement('div')
+  addressStreet.textContent = profile.address.street
 
-    const addressSuite = document.createElement('div')
-    addressSuite.textContent = profile.address.suite
+  const addressSuite = document.createElement('div')
+  addressSuite.textContent = profile.address.suite
 
-    const addressCity = document.createElement('div')
-    addressCity.textContent = profile.address.city 
+  const addressCity = document.createElement('div')
+  addressCity.textContent = profile.address.city 
 
-    const addressZipcode = document.createElement('div')
-    addressZipcode.textContent = profile.address.zipcode
+  const addressZipcode = document.createElement('div')
+  addressZipcode.textContent = profile.address.zipcode
 
-    addressWrapper.append(addressStreet, addressSuite, addressCity, addressZipcode)
+  addressWrapper.append(addressStreet, addressSuite, addressCity, addressZipcode)
 
-    const profilePhone = document.createElement('div')
-    profilePhone.textContent = profile.phone
+  const profilePhone = document.createElement('div')
+  profilePhone.textContent = profile.phone
 
-    const profileWebsite = document.createElement('div')
-    profileWebsite.textContent = profile.website 
+  const profileWebsite = document.createElement('div')
+  profileWebsite.textContent = profile.website 
 
-    const companyWrapper = document.createElement('div')
-    companyWrapper.classList.add('company-wrapper')
+  const companyWrapper = document.createElement('div')
+  companyWrapper.classList.add('company-wrapper')
 
-    const companyStreet = document.createElement('div')
-    companyStreet.textContent = profile.company.name
+  const companyStreet = document.createElement('div')
+  companyStreet.textContent = profile.company.name
 
-    const companySuite = document.createElement('div')
-    companySuite.textContent = profile.company.catchPhrase
+  const companySuite = document.createElement('div')
+  companySuite.textContent = profile.company.catchPhrase
 
-    const companyCity = document.createElement('div')
-    companyCity.textContent = profile.company.bs 
+  const companyCity = document.createElement('div')
+  companyCity.textContent = profile.company.bs 
 
-    companyWrapper.append(companyStreet, companySuite, companyCity)
-    profileWrapper.append(profileFullName, profileUsername, profileEmail, profilePhone, addressWrapper, profileWebsite, companyWrapper)
+  companyWrapper.append(companyStreet, companySuite, companyCity)
+  profileWrapper.append(profileFullName, profileUsername, profileEmail, profilePhone, addressWrapper, profileWebsite, companyWrapper)
 
-    pageWrapper.append(profileWrapper)
+  pageWrapper.append(profileWrapper)
 }
 
 async function getUserPosts() {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=5`)
+  const querryParams = location.search
+  const urlParams = new URLSearchParams(querryParams)
+  const userId = urlParams.get('user-id')
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
   const posts = await res.json()
 
   const postList = document.createElement('ul')
@@ -74,7 +81,7 @@ async function getUserPosts() {
     const postItem = document.createElement('li')
     postItem.classList.add('post-item')
     postItem.innerHTML = `
-      <a href="./post.html?id=${postId}">${postTitle}</a>
+      <a href="./post.html?post-id=${postId}">${postTitle}</a>
     `
 
     postList.append(postItem)
@@ -83,27 +90,30 @@ async function getUserPosts() {
 
 
 async function getUserAlbums() {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/albums?userId=5`)
-    const albums = await res.json()
-  
-    const albumList = document.createElement('ul')
-    albumList.classList.add('albums-list')
-  
-    pageWrapper.after(albumList)
-  
-    for (const album of albums) {
-      const albumId = album.id
-      const albumTitle = album.title
-  
-      const albumItem = document.createElement('li')
-      albumItem.classList.add('album-item')
-      albumItem.innerHTML = `
-        <a href="./album.html?id=${albumId}">${albumTitle}</a>
-      `
-  
-      albumList.append(albumItem)
-    }
+const querryParams = location.search
+const urlParams = new URLSearchParams(querryParams)
+const userId = urlParams.get('user-id')
+  const res = await fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
+  const albums = await res.json()
+
+  const albumList = document.createElement('ul')
+  albumList.classList.add('albums-list')
+
+  pageWrapper.after(albumList)
+
+  for (const album of albums) {
+    const albumId = album.id
+    const albumTitle = album.title
+
+    const albumItem = document.createElement('li')
+    albumItem.classList.add('album-item')
+    albumItem.innerHTML = `
+      <a href="./album.html?album-id=${albumId}">${albumTitle}</a>
+    `
+
+    albumList.append(albumItem)
   }
+}
 
 
 userProfile()

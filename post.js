@@ -1,7 +1,11 @@
 const pageWrapper = document.querySelector('#page-content')
 
 async function viewPost() {
-    const postRes = await fetch(`https://jsonplaceholder.typicode.com/posts/5?_expand=user&_embed=comments`)
+    const querryParams = location.search
+    const urlParams = new URLSearchParams(querryParams)
+    const postId = urlParams.get('post-id')
+
+    const postRes = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}?_expand=user&_embed=comments`)
     const post = await postRes.json()
 
     const postTitle = document.createElement('h4')
@@ -19,11 +23,13 @@ async function viewPost() {
     authorLink.classList.add('author-link')
 
 
-    authorLink.href = `./user.html?id=${post.userId}`
+    authorLink.href = `./user.html?user-id=${post.userId}`
     authorLink.textContent = post.user.name
-    postAuthor.append('Author: ', authorLink)
+    const authorLabel = document.createTextNode('Author: ')
+    postAuthor.append(authorLabel, authorLink)
 
     const commentsWrapper = document.createElement('div')
+    commentsWrapper.classList.add('comments-wrapper')
     const commentsHeader = document.createElement('h4')
     commentsHeader.classList.add('comments-header')
     commentsHeader.textContent = 'Comments:'
@@ -45,7 +51,7 @@ async function viewPost() {
     }
 
     const authorPostsLink = document.createElement('a')
-    authorPostsLink.href = `./posts.html?userId=${post.userId}`
+    authorPostsLink.href = `./posts.html?user-id=${post.userId}`
     authorPostsLink.textContent = `Other posts by ${post.user.name}`
 
     pageWrapper.append(postTitle, postAuthor, postContent, commentsWrapper, authorPostsLink)
