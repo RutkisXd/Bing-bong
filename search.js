@@ -103,6 +103,8 @@ function createOptionElement(arr) {
   const selectElement = document.createElement('select');
   selectElement.classList.add('select-element');
 
+  console.log(arr)
+
   arr.forEach(item => {
     const optionElement = document.createElement('option');
     optionElement.classList.add('option-element');
@@ -115,13 +117,12 @@ function createOptionElement(arr) {
 }
 
 
-function createDetailedSearch(optionArray) {
+function createDetailedSearch() {
   const searchWrapper = document.createElement('div');
   searchWrapper.classList.add('search-wrapper');
 
   const searchForm = document.createElement('form');
   searchForm.classList.add('search-form');
-  searchWrapper.appendChild(searchForm);
 
   const searchInput = document.createElement('input');
   searchInput.type = 'text';
@@ -140,12 +141,12 @@ function createDetailedSearch(optionArray) {
   searchButton.textContent = 'Search';
   searchButton.classList.add('search-button');
   searchForm.appendChild(searchButton);
+  searchWrapper.appendChild(searchForm);
 
   return searchWrapper;
 }
 
 createDetailedSearch()
-createOptionElement()
 
 // function renderSearchResults(searchResults) {
 //   const resultsContainer = document.querySelector('#results-container');
