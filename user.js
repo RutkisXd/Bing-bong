@@ -69,10 +69,20 @@ async function getUserPosts() {
   const res = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
   const posts = await res.json()
 
+  const postsResultsWrapper = document.createElement('div')
+  postsResultsWrapper.classList.add('posts-results-wrapper')
+
+  const postsResultsHeading = document.createElement('h4')
+  postsResultsHeading.classList.add('posts-results-heading')
+  postsResultsHeading.textContent = 'Posts results: '
+
   const postList = document.createElement('ul')
   postList.classList.add('posts-list')
 
-  pageWrapper.after(postList)
+  postsResultsWrapper.append(postsResultsHeading)
+  postsResultsWrapper.append(postList)
+
+  pageWrapper.after(postsResultsWrapper)
 
   for (const post of posts) {
     const postId = post.id
@@ -96,10 +106,21 @@ const userId = urlParams.get('user-id')
   const res = await fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
   const albums = await res.json()
 
+  const albumsResultsWrapper = document.createElement('div')
+  albumsResultsWrapper.classList.add('albums-results-wrapper')
+
+  const albumsResultsHeading = document.createElement('h4')
+  albumsResultsHeading.classList.add('albums-results-heading')
+  albumsResultsHeading.textContent = 'Albums results: '
+
+  albumsResultsWrapper.append(albumsResultsHeading)
+
   const albumList = document.createElement('ul')
   albumList.classList.add('albums-list')
 
-  pageWrapper.after(albumList)
+  albumsResultsWrapper.append(albumList)
+
+  pageWrapper.after(albumsResultsWrapper)
 
   for (const album of albums) {
     const albumId = album.id

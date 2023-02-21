@@ -1,15 +1,30 @@
-.navigation-wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(191, 196, 196);
-    padding: 20px 10px;
-    margin-bottom: 20px;
+.navigation-wrapper 
+ul > li
+{
+    list-style-type: none;
+    display: inline;
+    gap: 10px;
+    padding-right: 10px;
 }
 
 .navigation-item {
     text-decoration: none;
     color: black;
+}
+
+.navigation-list {
+    margin: 0px;
+    padding: 0px;
+}
+
+.navigation-and-search-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: beige;
+    margin-bottom: 20px;
 }

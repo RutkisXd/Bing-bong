@@ -1,9 +1,11 @@
+// import { renderNavigationAndSearch, navigationArr, createNavigation, createSearch } from './navigation.js';
+
 const pageWrapper = document.querySelector('#page-content');
 
 async function getAlbum() {
-    const querryParams = location.search
-    const urlParams = new URLSearchParams(querryParams)
-    const albumId = urlParams.get('album-id')
+    const queryParams = location.search;
+    const urlParams = new URLSearchParams(queryParams);
+    const albumId = urlParams.get('album-id');
 
     const albumRes = await fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}?_expand=user&_expand=userId&_embed=photos`);
     const album = await albumRes.json();
@@ -30,7 +32,8 @@ async function getAlbum() {
         photosWrapper.appendChild(photoLink);
   });
 
-  pageWrapper.append(albumTitle, authorLink, photosWrapper);
+  pageWrapper.append(albumTitle, photosWrapper);
+  pageWrapper.appendChild(authorLink);
 
   const gallery = new PhotoSwipe(document.querySelector('.my-gallery'), PhotoSwipeUI_Default, album.photos, {
     index: 0,
