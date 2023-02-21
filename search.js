@@ -118,6 +118,7 @@ function createOptionElement(arr) {
 
 
 function createDetailedSearch() {
+  const pageWrapper = document.querySelector('#page-content');
   const searchWrapper = document.createElement('div');
   searchWrapper.classList.add('search-wrapper');
 
@@ -142,8 +143,9 @@ function createDetailedSearch() {
   searchButton.classList.add('search-button');
   searchForm.appendChild(searchButton);
   searchWrapper.appendChild(searchForm);
+  pageWrapper.append(searchWrapper)
 
-  return searchWrapper;
+  return pageWrapper;
 }
 
 createDetailedSearch()
