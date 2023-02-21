@@ -12,12 +12,12 @@ async function init() {
   if (!hasSearched) {
     await searchResults();
   } else {
-    console.log()
+    console.log('bbb')
     return
   }
 
   createDetailedSearch(optionArray)
-  renderSearchResults();
+  renderSearchResults(searchResults);
 }
 
 async function searchResults() {
@@ -145,7 +145,6 @@ function createDetailedSearch(optionArray) {
 
 function renderSearchResults(searchResults) {
   const resultsContainer = document.querySelector('#results-container');
-  resultsContainer.innerHTML = '';
   
   if (searchResults.length > 0) {
     const resultList = document.createElement('ul');
@@ -188,6 +187,8 @@ function renderSearchResults(searchResults) {
     noResults.textContent = 'No results found.';
     resultsContainer.appendChild(noResults);
   }
+
+  return resultsContainer
 }
 
 

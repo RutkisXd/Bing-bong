@@ -28,9 +28,12 @@ async function generateIndexPage() {
   pageContent.appendChild(homeHeader);
 
   // Add Users section
+  const usersWrapper = document.createElement('div')
+  usersWrapper.classList.add('users-wrapper')
   const usersHeading = document.createElement('h4');
   usersHeading.textContent = '5 new authors';
-  pageContent.appendChild(usersHeading);
+  usersWrapper.appendChild(usersHeading);
+  pageContent.append(usersWrapper)
 
   const usersList = document.createElement('ul');
   users.forEach(user => {
@@ -41,12 +44,14 @@ async function generateIndexPage() {
     userItem.appendChild(userLink);
     usersList.appendChild(userItem);
   });
-  pageContent.appendChild(usersList);
+  usersWrapper.appendChild(usersList);
 
   // Add Posts section
+  const postsWrapper = document.createElement('div')
+  postsWrapper.classList.add('posts-wrapper')
   const postsHeading = document.createElement('h4');
   postsHeading.textContent = '5 new posts';
-  pageContent.appendChild(postsHeading);
+  postsWrapper.appendChild(postsHeading);
 
   const postsList = document.createElement('ul');
   posts.forEach(post => {
@@ -57,12 +62,15 @@ async function generateIndexPage() {
     postItem.appendChild(postLink);
     postsList.appendChild(postItem);
   });
-  pageContent.appendChild(postsList);
+  postsWrapper.appendChild(postsList);
+  pageContent.append(postsWrapper)
 
   // Add Albums section
+  const albumsWrapper = document.createElement('div')
+  albumsWrapper.classList.add('albums-wrapper')
   const albumsHeading = document.createElement('h4');
   albumsHeading.textContent = '5 new albums';
-  pageContent.appendChild(albumsHeading);
+  albumsWrapper.appendChild(albumsHeading);
 
   const albumsList = document.createElement('ul');
   albums.forEach(album => {
@@ -73,7 +81,8 @@ async function generateIndexPage() {
     albumItem.appendChild(albumLink);
     albumsList.appendChild(albumItem);
   });
-  pageContent.appendChild(albumsList);
+  albumsWrapper.appendChild(albumsList);
+  pageContent.append(albumsWrapper)
 }
 
 generateIndexPage();
