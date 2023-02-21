@@ -1,4 +1,4 @@
-const navigationArr = [
+export const navigationArr = [
   {
     name: 'Home',
     src: './index.html',
@@ -16,7 +16,7 @@ const navigationArr = [
     src: './albums.html',
   },
 ];
-export {navigationArr};
+
 
 export function createNavigation() {
 const navigationList = document.createElement('ul');

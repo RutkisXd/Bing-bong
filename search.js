@@ -1,16 +1,27 @@
+import { renderNavigationAndSearch } from './navigation.js';
+
 const optionArray = ['posts', 'albums', 'authors'];
 
 let hasSearched = false;
 
-async function searchResults() {
-  if (hasSearched) {
-    return;
+async function init() {
+  const pageWrapper = document.querySelector('#page-content');
+  const navigation = renderNavigationAndSearch();
+  pageWrapper.before(navigation);
+
+  if (!hasSearched) {
+    await searchResults();
+  } else {
+    console.log()
+    return
   }
 
-  const pageWrapper = document.querySelector('#page-content');
-  const searchWrapper = document.querySelector('.search-wrapper');
+  createDetailedSearch(optionArray)
+  renderSearchResults();
+}
 
-  pageWrapper.appendChild(searchWrapper);
+async function searchResults() {
+  const pageWrapper = document.querySelector('#page-content');
 
   const params = new URLSearchParams(window.location.search);
   const searchTerm = params.get('q');
@@ -77,6 +88,7 @@ async function searchResults() {
     searchResults.appendChild(postResultList);
   }
 
+  const searchWrapper = document.querySelector('.search-wrapper');
   if (searchWrapper) {
     searchWrapper.remove();
   }
@@ -101,7 +113,8 @@ function createOptionElement(arr) {
   return selectElement;
 }
 
-function createDetailedSearch() {
+
+function createDetailedSearch(optionArray) {
   const searchWrapper = document.createElement('div');
   searchWrapper.classList.add('search-wrapper');
 
@@ -114,9 +127,10 @@ function createDetailedSearch() {
   searchInput.name = 'q';
   searchInput.classList.add('search-input');
 
-  searchForm.append(searchInput)
+  searchForm.append(searchInput);
 
   const selectElement = createOptionElement(optionArray);
+  selectElement.classList.add('select-element');
 
   searchForm.appendChild(selectElement);
 
@@ -129,138 +143,54 @@ function createDetailedSearch() {
   return searchWrapper;
 }
 
-async function renderSearchResults() {
-  const pageWrapper = document.querySelector('#page-content');
-  const categoryElement = document.querySelector('.select-element');
+function renderSearchResults(searchResults) {
+  const resultsContainer = document.querySelector('#results-container');
+  resultsContainer.innerHTML = '';
+  
+  if (searchResults.length > 0) {
+    const resultList = document.createElement('ul');
+    resultList.classList.add('results-list');
 
-  const searchWrapper = createDetailedSearch();
-  pageWrapper.appendChild(searchWrapper);
-
-  const searchResultsContainer = document.createElement('div');
-  searchResultsContainer.classList.add('search-results-container');
-  searchWrapper.appendChild(searchResultsContainer);
-
-  const params = new URLSearchParams(window.location.search);
-  const searchTerm = params.get('q');
-
-  const categoryValue = categoryElement.value;
-
-  if (categoryValue === 'authors') {
-    const userResults = await fetch(`https://jsonplaceholder.typicode.com/users?q=${searchTerm}`);
-    const userResultsJson = await userResults.json();
-
-    const userResultList = document.createElement('ul');
-    userResultList.classList.add('user-result-list');
-
-    const userResultHeader = document.createElement('h4');
-    userResultHeader.textContent = 'Users results:';
-    userResultHeader.classList.add('user-results-header');
-
-    userResultList.append(userResultHeader);
-
-    for (const result of userResultsJson) {
+    searchResults.forEach(result => {
       const resultItem = document.createElement('li');
       resultItem.classList.add('result-item');
 
       const resultLink = document.createElement('a');
-      resultLink.textContent = `${result.name}`;
-      resultLink.href = `./user.html?user-id=${result.id}`;
+      resultLink.classList.add('result-link');
+      resultLink.href = result.url;
+      resultLink.textContent = result.title;
 
-      resultItem.append(resultLink);
-      userResultList.append(resultItem);
-    }
+      resultItem.appendChild(resultLink);
+      resultList.appendChild(resultItem);
+    });
 
-    searchResultsContainer.appendChild(userResultList);
+    resultsContainer.appendChild(resultList);
 
-  } else if (categoryValue === 'posts') {
-    const postResults = await fetch(`https://jsonplaceholder.typicode.com/posts?q=${searchTerm}&_expand=user`);
-    const postResultsJson = await postResults.json();
+    const optionsList = document.createElement('ul');
+    optionsList.classList.add('options-list');
 
-    const postResultList = document.createElement('ul');
-    postResultList.classList.add('post-result-list');
+    optionArray.forEach(option => {
+      const optionItem = document.createElement('li');
+      optionItem.classList.add('option-item');
 
-    const postResultHeader = document.createElement('h4');
-    postResultHeader.textContent = 'Posts results:';
-    postResultHeader.classList.add('post-results-header');
+      const optionLink = document.createElement('a');
+      optionLink.classList.add('option-link');
+      optionLink.href = option.url;
+      optionLink.textContent = option.title;
 
-    postResultList.append(postResultHeader);
+      optionItem.appendChild(optionLink);
+      optionsList.appendChild(optionItem);
+    });
 
-    for (const result of postResultsJson) {
-      const resultItem = document.createElement('li');
-      resultItem.classList.add('result-item');
-
-      const resultLink = document.createElement('a');
-      resultLink.textContent = `${result.title}`;
-      resultLink.href = `./post.html?post-id=${result.id}`;
-
-      const resultAuthorLink = document.createElement('a');
-      resultAuthorLink.textContent = `${result.user.name}`
-      resultAuthorLink.href = `./user.html?user-id=${result.user.id}`
-
-      resultItem.append(resultLink, ' - Written by: ', resultAuthorLink);
-      postResultList.append(resultItem);
-    }
-
-    searchResultsContainer.appendChild(postResultList);
-  
-  } else if (categoryValue === 'albums') {
-  
-    const albumResults = await fetch(
-      `https://jsonplaceholder.typicode.com/albums?q=${searchTerm}&_expand=user`
-    );
-    const albumResultsJson = await albumResults.json();
-  
-    const albumResultList = document.createElement('ul');
-    albumResultList.classList.add('album-result-list');
-  
-    const albumResultHeader = document.createElement('h4');
-    albumResultHeader.textContent = 'Albums results:';
-    albumResultHeader.classList.add('album-results-header');
-  
-    albumResultList.append(albumResultHeader);
-  
-    for (const result of albumResultsJson) {
-      const resultItem = document.createElement('li');
-      resultItem.classList.add('result-item');
-  
-      const resultLink = document.createElement('a');
-      resultLink.textContent = `${result.title}`;
-      resultLink.href = `./album.html?album-id=${result.id}`;
-  
-      const resultAuthorLink = document.createElement('a');
-      resultAuthorLink.textContent = `${result.user.name}`;
-      resultAuthorLink.href = `./user.html?user-id=${result.userId}`;
-  
-      resultItem.append(resultLink, ' - Created by: ', resultAuthorLink);
-      albumResultList.append(resultItem);
-    }
-  
-    searchResultsContainer.appendChild(albumResultList);
-  }
-  
-  // handle the search results
-  const searchResults = document.createElement('div');
-  searchResults.classList.add('search-results');
-  
-  if (userResultsJson.length === 0 && postResultsJson.length === 0 && albumResultsJson.length === 0) {
-    const noResults = document.createElement('p');
-    noResults.textContent = 'No results found for your search.';
-    searchResults.append(noResults);
+    resultsContainer.appendChild(optionsList);
   } else {
-    // create a list of search results
-    if (userResultsJson.length > 0) {
-      searchResults.append(userResultList);
-    }
-  
-    if (postResultsJson.length > 0) {
-      searchResults.append(postResultList);
-    }
-  
-    if (albumResultsJson.length > 0) {
-      searchResults.append(albumResultList);
-    }
+    const noResults = document.createElement('p');
+    noResults.textContent = 'No results found.';
+    resultsContainer.appendChild(noResults);
   }
-  
-  // append the search results to the DOM
-  pageWrapper.append(searchResults);
-}    
+}
+
+
+init()
+
+

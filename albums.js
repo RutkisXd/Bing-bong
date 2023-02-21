@@ -13,7 +13,7 @@ async function getAlbums() {
     const photosCount = album.photos.length
     const randomIndex = Math.floor(Math.random() * album.photos.length)
     const randomPhoto = album.photos[randomIndex]
-    const randomPhotoUrl = randomPhoto.url
+    const randomPhotoUrl = randomPhoto.thumbnailUrl
     const randomPhotoTitle = randomPhoto.title
 
     const albumItem = document.createElement('div')
