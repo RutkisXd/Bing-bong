@@ -5,19 +5,18 @@ const optionArray = ['posts', 'albums', 'authors'];
 let hasSearched = false;
 
 async function init() {
-  const pageWrapper = document.querySelector('#page-content');
-  const navigation = renderNavigationAndSearch();
-  pageWrapper.before(navigation);
+  // const pageWrapper = document.querySelector('#page-content');
+  // const navigation = renderNavigationAndSearch();
+  // pageWrapper.before(navigation);
 
-  if (!hasSearched) {
-    await searchResults();
-  } else {
-    console.log('bbb')
-    return
-  }
-
-  createDetailedSearch(optionArray)
-  renderSearchResults(searchResults);
+  // if (!hasSearched) {
+  //   await searchResults();
+  //   const searchWrapper = document.querySelector('.navigation-and-search-wrapper')
+  //   searchWrapper.remove()
+  // } else {
+  //   createDetailedSearch(optionArray)
+  //   renderSearchResults(searchResults);
+  // }
 }
 
 async function searchResults() {
@@ -98,6 +97,8 @@ async function searchResults() {
   hasSearched = true;
 }
 
+searchResults()
+
 function createOptionElement(arr) {
   const selectElement = document.createElement('select');
   selectElement.classList.add('select-element');
@@ -143,53 +144,56 @@ function createDetailedSearch(optionArray) {
   return searchWrapper;
 }
 
-function renderSearchResults(searchResults) {
-  const resultsContainer = document.querySelector('#results-container');
+createDetailedSearch()
+createOptionElement()
+
+// function renderSearchResults(searchResults) {
+//   const resultsContainer = document.querySelector('#results-container');
   
-  if (searchResults.length > 0) {
-    const resultList = document.createElement('ul');
-    resultList.classList.add('results-list');
+//   if (searchResults.length > 0) {
+//     const resultList = document.createElement('ul');
+//     resultList.classList.add('results-list');
 
-    searchResults.forEach(result => {
-      const resultItem = document.createElement('li');
-      resultItem.classList.add('result-item');
+//     searchResults.forEach(result => {
+//       const resultItem = document.createElement('li');
+//       resultItem.classList.add('result-item');
 
-      const resultLink = document.createElement('a');
-      resultLink.classList.add('result-link');
-      resultLink.href = result.url;
-      resultLink.textContent = result.title;
+//       const resultLink = document.createElement('a');
+//       resultLink.classList.add('result-link');
+//       resultLink.href = result.url;
+//       resultLink.textContent = result.title;
 
-      resultItem.appendChild(resultLink);
-      resultList.appendChild(resultItem);
-    });
+//       resultItem.appendChild(resultLink);
+//       resultList.appendChild(resultItem);
+//     });
 
-    resultsContainer.appendChild(resultList);
+//     resultsContainer.appendChild(resultList);
 
-    const optionsList = document.createElement('ul');
-    optionsList.classList.add('options-list');
+//     const optionsList = document.createElement('ul');
+//     optionsList.classList.add('options-list');
 
-    optionArray.forEach(option => {
-      const optionItem = document.createElement('li');
-      optionItem.classList.add('option-item');
+//     optionArray.forEach(option => {
+//       const optionItem = document.createElement('li');
+//       optionItem.classList.add('option-item');
 
-      const optionLink = document.createElement('a');
-      optionLink.classList.add('option-link');
-      optionLink.href = option.url;
-      optionLink.textContent = option.title;
+//       const optionLink = document.createElement('a');
+//       optionLink.classList.add('option-link');
+//       optionLink.href = option.url;
+//       optionLink.textContent = option.title;
 
-      optionItem.appendChild(optionLink);
-      optionsList.appendChild(optionItem);
-    });
+//       optionItem.appendChild(optionLink);
+//       optionsList.appendChild(optionItem);
+//     });
 
-    resultsContainer.appendChild(optionsList);
-  } else {
-    const noResults = document.createElement('p');
-    noResults.textContent = 'No results found.';
-    resultsContainer.appendChild(noResults);
-  }
+//     resultsContainer.appendChild(optionsList);
+//   } else {
+//     const noResults = document.createElement('p');
+//     noResults.textContent = 'No results found.';
+//     resultsContainer.appendChild(noResults);
+//   }
 
-  return resultsContainer
-}
+//   return resultsContainer
+// }
 
 
 init()
