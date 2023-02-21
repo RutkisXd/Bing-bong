@@ -28,6 +28,10 @@ async function viewPost() {
     const authorLabel = document.createTextNode('Author: ')
     postAuthor.append(authorLabel, authorLink)
 
+    const editButton = document.createElement('a')
+    editButton.textContent = 'Edit post'
+    editButton.href = `./edit-post.html?post-id-${postId}`
+
     const commentsWrapper = document.createElement('div')
     commentsWrapper.classList.add('comments-wrapper')
     const commentsHeader = document.createElement('h4')
@@ -36,6 +40,7 @@ async function viewPost() {
     commentsWrapper.append(commentsHeader)
 
     for (const comment of post.comments) {
+        let id = comment.id
         const commentTitle = document.createElement('h6')
         commentTitle.textContent = comment.name
 
@@ -46,7 +51,20 @@ async function viewPost() {
         commentEmail.textContent = `Email: ${comment.email}`
 
         const commentDiv = document.createElement('div')
-        commentDiv.append(commentTitle, commentBody, commentEmail)
+
+        const deleteComment = document.createElement('button')
+        deleteComment.classList.add('delete-comment')
+        deleteComment.textContent = 'Delete comment'
+
+        deleteComment.addEventListener('click', (event) => {
+            fetch(`https://jsonplaceholder.typicode.com/posts/${id}`), {
+                method: 'DELETE'
+            }
+
+        })
+
+
+        commentDiv.append(commentTitle, commentBody, commentEmail, deleteComment)
         commentsWrapper.append(commentDiv)
     }
 
@@ -54,7 +72,7 @@ async function viewPost() {
     authorPostsLink.href = `./posts.html?user-id=${post.userId}`
     authorPostsLink.textContent = `Other posts by ${post.user.name}`
 
-    pageWrapper.append(postTitle, postAuthor, postContent, commentsWrapper, authorPostsLink)
+    pageWrapper.append(postTitle, postAuthor, postContent, editButton, commentsWrapper, authorPostsLink)
 }
 
 viewPost()

@@ -1,0 +1,11 @@
+.album-item a {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.albums-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
